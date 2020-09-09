@@ -1,4 +1,4 @@
-from classification import Simple_Accurecy, Balanced_Accurecy, Precision, Recall, F1_score, confusion_matrix, Classification_Report, Multi_Matrix
+from metrics.classification import Simple_Accurecy, Balanced_Accurecy, Precision, Recall, F1_score, confusion_matrix, Classification_Report, Multi_Matrix
 import seaborn as sns
 import numpy as np
 def applyForBinaryClassification(TrueData, PredData):

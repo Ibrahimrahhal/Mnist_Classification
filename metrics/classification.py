@@ -1,4 +1,4 @@
-from classfier_metric import metric
+from metrics.classfier_metric import metric
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, balanced_accuracy_score, confusion_matrix, classification_report, multilabel_confusion_matrix
 
 class Simple_Accurecy(metric):
