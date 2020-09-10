@@ -12,10 +12,9 @@ def load_ready_mnist():
     # Sorting the dataset in order to split it correctly to train, test subsets
     sort_by_target(mnist)
     X, y = mnist['data'], mnist['target']
-
     # Splitting the dataset
-    X_train, X_test, y_train, y_test = X[:10], X[60000:], y[:10], y[60000:]
-
+    X_train, X_test, y_train, y_test = X[:60000], X[60000:], y[:60000], y[60000:]
+    print(X_train.shape)
     # Creating two extra copies of each image, each one shifted one pixel to one direction (training set expansion) I am
     # leaving it commented because it triples the size of the dataset. And it takes much more time to process it,
     # it increases the accuracy though
@@ -24,7 +23,7 @@ def load_ready_mnist():
 
 
     # Shuffling the dataset
-    shuffle_index = np.random.permutation(10)
+    shuffle_index = np.random.permutation(60000)
     X_train, y_train = X_train[shuffle_index], y_train[shuffle_index]
 
     # Scaling
@@ -34,4 +33,4 @@ def load_ready_mnist():
     # X_train_scale is the final fully prepared variable for the training data
     # y_train is the final fully prepared variable for the training data labels
 
-    return X_train_scaled, y_train
+    return X_train_scaled, X_test, y_train, y_test

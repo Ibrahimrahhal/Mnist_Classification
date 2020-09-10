@@ -13,40 +13,41 @@ class Balanced_Accurecy(metric):
     def metricFunction(self):
         return balanced_accuracy_score(self.trueValues, self.predValues)
 
-class Precision:
+class Precision(metric):
     metricName = "Precision"
 
     def metricFunction(self):
         return precision_score(self.trueValues, self.predValues)
          
-class Recall:
+class Recall(metric):
     metricName = "Recall"
 
     def metricFunction(self):
         return recall_score(self.trueValues, self.predValues)
 
-class F1_score:
+class F1_score(metric):
     metricName = "F1_score"
 
     def metricFunction(self):
         return f1_score(self.trueValues, self.predValues)
 
 
-class confusion_matrix:
+class confusion_matrix(metric):
     metricName = "confusion_matrix"
 
     def metricFunction(self):
-        return confusion_matrix(self.trueValues, self.predValues)        
+        matrix = confusion_matrix(self.trueValues, self.predValues)(self.trueValues, self.predValues)     
+        return matrix    
 
 
-class Classification_Report:
+class Classification_Report(metric):
     metricName = "classification_report"
 
     def metricFunction(self):
         return classification_report(self.trueValues, self.predValues)      
 
 
-class Multi_Matrix:
+class Multi_Matrix(metric):
     metricName = "multilabel_confusion_matrix"
 
     def metricFunction(self):

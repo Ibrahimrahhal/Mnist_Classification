@@ -3,16 +3,16 @@ class metric(ABC):
     
     metricName = 'default'
 
-    def __init__(true, pred, desc, self):
+    def __init__(self, true, pred, desc="" ):
         self.trueValues = true
         self.predValues = pred
         self.desc = desc
 
     def calc(self):
-        return self.desc + " With " + self.metricName + " :- " +self.metricFunction(self.trueValues, self.predValues)
+        return self.desc + " With " + self.metricName + " :- " + str(self.metricFunction())
 
     def getCalc(self):
-        return self.metricFunction(self.trueValues, self.predValues)
+        return self.metricFunction()
 
     @property
     @abstractmethod
