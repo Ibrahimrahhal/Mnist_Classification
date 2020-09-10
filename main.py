@@ -10,6 +10,7 @@ from pip._vendor.webencodings import labels
 from sklearn.datasets import fetch_openml
 from sklearn.metrics import roc_curve, plot_roc_curve, roc_auc_score, f1_score
 from sklearn.model_selection import cross_val_predict
+from sklearn.preprocessing import label
 
 mnist=fetch_openml('mnist_784',version=1,cache=True)
 print(mnist)
@@ -28,7 +29,7 @@ some_digit_image = some_digit.reshape(28, 28)
 plt.imshow(some_digit_image, cmap = matplotlib.cm.binary,
 interpolation="nearest")
 plt.axis("off")
-plt.show()
+#plt.show()
 
 
 X_train, X_test, y_train, y_test = X[:20000], X[20000:], y[:20000], y[20000:]
@@ -47,6 +48,23 @@ sgd_clf = SGDClassifier(random_state=42)
 sgd_clf.fit(X_train, y_train_5)
 print(sgd_clf.predict([some_digit]))
 
+y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3,method="decision_function")
+
+from sklearn.metrics import roc_curve
+fpr, tpr, thresholds = roc_curve(y_train_5, y_scores)
+
+def plot_roc_curve(fpr, tpr,label= None):
+    plt.plot(fpr, tpr, linewidth=2,label=label)
+    plt.plot([0, 1], [0, 1], 'k--')
+    plt.axis([0, 1, 0, 1])
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+plot_roc_curve(fpr, tpr,"SGD")
+plt.legend()
+plt.show()
+
+from sklearn.metrics import roc_auc_score
+print(roc_auc_score(y_train_5, y_scores))
 #Measuring Accuracy Using Cross-Validation
 #from sklearn.model_selection import StratifiedKFold
 #from sklearn.base import clone
@@ -74,13 +92,18 @@ print(cross_val_score(sgd_clf, X_train, y_train_5, cv=3, scoring="accuracy"))
 from sklearn.ensemble import RandomForestClassifier
 forest_clf = RandomForestClassifier(random_state=42)
 y_probas_forest = cross_val_predict(forest_clf, X_train, y_train_5, cv=3,method="predict_proba")
-print(y_probas_forest)
+(y_probas_forest)
 
+#ROC CURVE
+y_scores_forest = y_probas_forest[:, 1]
+fpr_forest, tpr_forest, thresholds_forest = roc_curve(y_train_5,y_scores_forest)
 
-#y_scores_forest = y_probas_forest[:, 1] # score = proba of positive class
-#fpr_forest, tpr_forest, thresholds_forest = roc_curve(y_train_5,y_scores_forest)
+plt.plot(fpr, tpr, "b:", label="SGD")
+plot_roc_curve(fpr_forest, tpr_forest, "Random Forest")
+plt.legend()
+plt.show()
 
-
+print(roc_auc_score(y_train_5, y_scores_forest))
 
 ###########################################
 #Multilabel Classification:KNeighborsClassifier
@@ -96,9 +119,6 @@ print(knn.predict([some_digit]))
 
 y_train_knn_pred = cross_val_predict(knn, X_train, y_train, cv=3)
 print(f1_score(y_train, y_train_knn_pred, average="macro"))
-
-
-
 
 #multiclass classification
 #Let’s try this with the SGDClassifier:
