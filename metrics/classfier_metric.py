@@ -9,7 +9,10 @@ class metric(ABC):
         self.desc = desc
 
     def calc(self):
-        return self.desc + " With " + self.metricName + " :- " + str(self.metricFunction())
+        if(metric != 'classification_report'):
+            return self.desc + " With " + self.metricName + " :- " + str(self.metricFunction())
+        else:
+            return self.desc + " With " + self.metricName + " :- \n" + str(self.metricFunction())   
 
     def getCalc(self):
         return self.metricFunction()

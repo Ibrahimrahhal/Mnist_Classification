@@ -1,5 +1,5 @@
 from metrics.classfier_metric import metric
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, balanced_accuracy_score, confusion_matrix, classification_report, multilabel_confusion_matrix
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, balanced_accuracy_score, confusion_matrix as conf, classification_report, multilabel_confusion_matrix
 
 class Simple_Accurecy(metric):
     metricName = "Simple Accurecy"
@@ -36,7 +36,7 @@ class confusion_matrix(metric):
     metricName = "confusion_matrix"
 
     def metricFunction(self):
-        matrix = confusion_matrix(self.trueValues, self.predValues)(self.trueValues, self.predValues)     
+        matrix = conf(self.trueValues, self.predValues)
         return matrix    
 
 

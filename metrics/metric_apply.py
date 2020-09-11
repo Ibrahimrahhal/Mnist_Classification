@@ -15,12 +15,17 @@ def applyForBinaryClassification(TrueData, PredData, desc):
     print(Precision(TrueData, PredData, desc).calc())
     print(Recall(TrueData, PredData, desc).calc())
     print(F1_score(TrueData, PredData, desc).calc())
-    # matrixVisualization(TrueData, PredData, False)
+    sns.heatmap(confusion_matrix(TrueData, PredData, desc).getCalc(), annot=True)
+    plt.show()
+
 
 
 def applyForMultiClassification(TrueData, PredData, desc):
+    print(Simple_Accurecy(TrueData, PredData, desc).calc())
+    print('')
     print(Classification_Report(TrueData, PredData, desc).calc())
-    print(Multi_Matrix(TrueData, PredData, desc).getCalc())
+    # sns.heatmap(Multi_Matrix(TrueData, PredData, desc).getCalc(), annot=True)
+    # plt.show()
 
 
 

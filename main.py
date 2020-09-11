@@ -46,9 +46,9 @@ y_odd = (y_train % 2 == 1)
 y_multilabel = np.c_[y_large, y_odd]
 knn = KNeighborsClassifier()
 knn.fit(X_train, y_multilabel)
-applyForMultiClassification(y_test, knn.predict(X_test), "KNeighborsClassifier")
+applyForMultiClassification(np.c_[(y_test >= 7), (y_test % 2 == 1)], knn.predict(X_test), "KNeighborsClassifier")
 
-#force ScikitLearn to use one-versus-one or one-versus-all:
+#force ScikitLearn t o use one-versus-one or one-versus-all:
 
 from sklearn.multiclass import OneVsOneClassifier
 ovo_clf = OneVsOneClassifier(SGDClassifier(random_state=42))
